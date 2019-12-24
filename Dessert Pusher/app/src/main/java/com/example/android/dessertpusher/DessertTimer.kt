@@ -37,6 +37,14 @@ import timber.log.Timber
  * https://developer.android.com/guide/components/processes-and-threads
  *
  */
+
+/*
+* LifecycleObserver
+* - fragment or activity 를 observe 하여 간단한 annotation 으로 lifecycle 에 맞춰 매서드가 동작한다.
+* - 특정 lifecycle 에만 반응해야하므로, 생성자를 선언할 때, 매개변수로 lifecycle 을 넘겨받는다.
+*
+* 동작할 코드들이 main lifecycle 를 주시하고 observe 한다는 점에서 신선함. 보다 편리함
+* */
 class DessertTimer(lifecycle: Lifecycle): LifecycleObserver {
 
     // The number of seconds counted since the timer started

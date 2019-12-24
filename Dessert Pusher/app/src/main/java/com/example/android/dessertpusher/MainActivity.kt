@@ -103,6 +103,10 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
      */
     private fun onDessertClicked() {
 
+        /*
+        * 아이템이 눌릴때마다, 총액 증가, 팔린 개수 증가
+        * - 이 수치를 다시 화면에 표시될 data로 재 세팅
+        * */
         // Update the score
         revenue += currentDessert.price
         dessertsSold++
@@ -187,6 +191,13 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         //dessertTimer.stopTimer()
     }
 
+    /*
+    * onSaveInstanceState : safety save in case app process torn down by OS
+        api >= 28 : after on stop
+        api<28  : before on stop
+    * */
+
+    /* onStop - onSaveInstanceState : main activity 가 background 로 이동할 때, */
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
         Timber.i("OnSavedInstanceState Called")
@@ -195,8 +206,20 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         outState?.putInt(DESSERT_TIMER,dessertTimer.secondsCount)
     }
 
+    /* onStart - onRestoreInstanceState */
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         Timber.i("OnRestoreInstanceState Called")
         super.onRestoreInstanceState(savedInstanceState)
     }
 }
+
+
+/*
+* configuration chagnes
+* 1. 사용자가 시스템 언어를 바꾸거나
+* 2. 키보드 세팅을 바꾸거나
+* 3. 화면을 돌릴때
+*
+* 현재의 엑티비티는 소멸되고 on pause, stop, saveinstancebundles, start, restoreinstancestate 등등의
+* 과정을 거쳐서 새로운 엑티비티가 만들어진다.
+* */
