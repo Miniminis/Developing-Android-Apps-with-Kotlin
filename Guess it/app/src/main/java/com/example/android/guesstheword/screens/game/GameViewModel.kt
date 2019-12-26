@@ -26,6 +26,11 @@ enum class BuzzType(val pattern: LongArray) {
 
 class GameViewModel: ViewModel(){
 
+    /* encapsulation 을 통해서 data 가 쉽게 조작될 수 없도록 한다.
+    * view 에서 계속 조작되고 바뀌어야 하는 값들은 임시 변수에 mutable data 로 초기화를 한 뒤,
+    * livedata 로 값을 넣어준다.
+    * - livedata 는 setter 가 없기 때문에 조작 불가능 - 안전!
+    * */
 
     // The current word
     private val _word = MutableLiveData<String>()
@@ -52,6 +57,10 @@ class GameViewModel: ViewModel(){
     val buzzArray: LiveData<BuzzType>
         get() = _buzzArray
 
+    /*
+    * map() : single transition
+    * however, for more than two datas : mediator live data or switch map
+    * */
     val currentTimeString = Transformations.map(currentTime){
         currentTime -> DateUtils.formatElapsedTime(currentTime)
     }
